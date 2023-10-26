@@ -1,66 +1,69 @@
-# Google Drive Sync Script (Lua)
+# Music Sync Script
 
-This script allows you to sync a Google Drive folder with your local machine using the Google Drive API. It will download and upload files to ensure that your local folder mirrors the remote Google Drive folder.
+This Bash script (`syncsongs.sh`) is designed to synchronize music files between a remote SSH server and a local directory. It uses the `rsync` utility along with SSH for secure file transfer.
 
-## Why Lua?
+## Features
 
-This project is written in Lua because of its speed and efficiency. Lua is known for its small footprint and high performance, making it a great choice for scripting tasks. It's particularly useful for projects where speed and resource utilization are essential. Additionally, this project serves as an example of a significant project implemented in Lua.
+- Automatically syncs music files between a remote server and a local directory.
+- Uses a configuration file (`config.json`) to store SSH connection details for easy management.
 
 ## Prerequisites
 
-Before you can use this script, you'll need to set up a few things:
+- **Bash**: Make sure you have Bash installed on your system.
+- **sshpass**: Install the `sshpass` utility for password-based SSH authentication.
+- **rsync**: Ensure `rsync` is installed on your system. If not, you can install it as follows:
 
-1. **Google Cloud Project and OAuth 2.0 Credentials:**
+   ```bash
+   # On Ubuntu/Debian
+   sudo apt-get install rsync
 
-   - Go to the [Google Developers Console](https://console.developers.google.com/).
-   - Create a new project or select an existing one.
-   - Enable the "Google Drive API" for your project.
-   - Go to the "Credentials" tab and create OAuth 2.0 client credentials. Download the JSON file containing your client ID and client secret.
-
-2. **Lua Environment:**
-
-   - You need to have Lua installed on your machine. You can download Lua from the official website: [Lua Downloads](https://www.lua.org/download.html).
-
-3. **Required Libraries:**
-
-   You'll need to install the `luasocket` and `luasec` libraries for making HTTPS requests.
-
-   ```shell
-   luarocks install luasocket
-   luarocks install luasec
+   # On CentOS/RHEL
+   sudo yum install rsync
    ```
-    Folder IDs:
 
-    Determine the folder ID of the Google Drive folder you want to sync and the local directory path where you want to store the files.
+## Installation
 
-## Configuration
+1. Clone this repository or download the syncsongs.sh script to your local machine.
 
-    Place the JSON file containing your client ID and client secret from the Google Cloud Console in the same directory as the script. Rename this file to client_secret.json.
+2. Ensure you have the necessary utilities installed
 
-    Open the Lua script in a text editor and modify the following variables:
-        driveFolderId: Set this to the folder ID of the Google Drive folder you want to sync.
-        localFolderPath: Set this to the local directory path where you want to store the synced files.
+3. Create a config.json file with your SSH connection details. An example configuration is provided in the repository.
 
 ## Usage
 
-  To run the script, use the following command:
+1. Configure the config.json file with your SSH connection details.
+2. Make the script executable:
+   ```bash
+   chmod +x syncsongs.sh
+   ```
+3. Run the script to synchronize your music files:
+   ```bash
+   ./syncsongs.sh
+   ```
 
-  ```shell
-  lua google_drive_sync.lua
-  ```
+## Configuration
 
-## Functionality
+The config.json file stores your SSH connection details. Here's an example:
+```json
+{
+  "SSH_USER": "your-ssh-username",
+  "SSH_HOST": "your-ssh-server-hostname",
+  "REMOTE_MUSIC_FOLDER": "/path/to/remote/music/folder",
+  "LOCAL_MUSIC_FOLDER": "./local/music/folder",
+  "SSH_PASSWORD": "your-ssh-password"
+}
+```
 
-    The script will authenticate with Google Drive using your OAuth credentials.
-    It will compare the files in the specified Google Drive folder with the local directory.
-    It will download missing files from Google Drive to the local directory.
-    It will upload new or modified files from the local directory to Google Drive.
+- "SSH_USER": Your SSH username.
+- "SSH_HOST": The SSH server's hostname or IP address.
+- "REMOTE_MUSIC_FOLDER": The full path to the remote music folder.
+- "LOCAL_MUSIC_FOLDER": The local directory where music files will be synced.
+- "SSH_PASSWORD": Your SSH password (only required for password-based authentication).
 
- ## Notes
+## Contributing
 
-    Google Drive API has quotas and rate limits. Be mindful of these limitations, especially if you have a large number of files to sync.
-    You can schedule this script to run periodically using cron jobs (Linux/macOS) or Task Scheduler (Windows) to keep your local and Google Drive folders in sync.
+Feel free to submit issues or pull requests if you encounter problems or have improvements to suggest.
 
 ## License
 
-  This project is licensed under the GNU General Public License, Version 3. See the LICENSE file for details.
+This project is licensed under the GNU General Public License version 3.0 (GNU GPLv3) - see the LICENSE file for details.
