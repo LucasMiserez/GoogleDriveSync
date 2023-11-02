@@ -2,6 +2,8 @@
 
 This Bash script (`syncsongs.sh`) is designed to synchronize music files between a remote SSH server and a local directory. It uses the `rsync` utility along with SSH for secure file transfer.
 
+**Disclaimer** This script syncs every file in the ssh server, but I use it to sync my music files
+
 ## Features
 
 - Automatically syncs music files between a remote server and a local directory.
