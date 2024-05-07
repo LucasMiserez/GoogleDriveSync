@@ -16,6 +16,9 @@ This Bash script (`syncsongs.sh`) is designed to synchronize music files between
 - **rsync**: Ensure `rsync` is installed on your system. If not, you can install it as follows:
 
    ```bash
+   # On Arch
+   sudo pacman -S rsync
+   
    # On Ubuntu/Debian
    sudo apt-get install rsync
 
